@@ -562,9 +562,9 @@ var timeline = [
 
 jsPsych.init({
         timeline: timeline,
-        // on_interaction_data_update: function(data) {
-        //     jsPsych.data.get().push(data)
-        // },
+        on_interaction_data_update: function(data) {
+            jsPsych.data.get().push(data)
+        },
         // on_data_update: function() {
         //     database.ref(firebase.auth().currentUser.uid).set({
         //         data: jsPsych.data.get().values()
