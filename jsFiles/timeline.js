@@ -563,7 +563,7 @@ var timeline = [
 jsPsych.init({
         timeline: timeline,
         on_interaction_data_update: function(data) {
-            console.log(data);
+            console.log(JSON.stringify(data))
             jsPsych.data.get().push(data);
         },
         on_data_update: function() {
