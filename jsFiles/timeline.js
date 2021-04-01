@@ -210,7 +210,8 @@ var exp = (function() {
             ],
             scale_width: 500,
             on_finish: function(data){
-                compAns1 = JSON.parse(data.responses)[`percentChk1_${round}`]
+                compAns1 = JSON.parse(data.responses)[`percentChk1_${round}`];
+                console.log(compAns1);
             }
         };
 
@@ -227,7 +228,8 @@ var exp = (function() {
             ],
             scale_width: 500,
             on_finish: function(data){
-                compAns2 = JSON.parse(data.responses)[`percentChk2_${round}`]
+                compAns2 = JSON.parse(data.responses)[`percentChk2_${round}`];
+                console.log(compAns2);
             },
         };
 
@@ -318,7 +320,7 @@ var exp = (function() {
 
     function MakeProbe(round) {
         this.type = 'html-keyboard-response';
-        this.data = {Trial_Type: 'probe'};
+        this.data = {Trial_Type: `probe_${round}`};
         this.stimulus = '<div class="box" style="background-color:gray"></div>';
         this.choices = [32];
         this.trial_duration = 300;
@@ -345,7 +347,7 @@ var exp = (function() {
 
     function MakeFeedback(round) {
         this.type = 'html-keyboard-response';
-        this.data = {Trial_Type: `feedback${round}`};
+        this.data = {Trial_Type: `feedback_${round}`};
         this.stimulus = function(){
             return (hit == 1) ? hitFeedback[round][hits-1] : missFeedback[round][misses-1];
         };
