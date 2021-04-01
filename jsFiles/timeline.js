@@ -124,7 +124,7 @@ var exp = (function() {
 
                 `<div class='parent'>
                 <p>At the end of each trial (i.e., when you see whether or not you won a jackpot),<br>you must press your
-                SPACBAR to start the next trial.</p>
+                <b>SPACEBAR</b> to start the next trial.</p>
                 </div>`],
 
                 part3: [`<div class='parent'>
@@ -561,10 +561,28 @@ var timeline = [
 ];
 
 jsPsych.init({
-    timeline: timeline, 
-    // on_finish: function() {
-    //     firebase.database().ref(firebase.auth().currentUser.uid).set({
-    //         data: jsPsych.data.get().values()
-    //     })
-    // }
+        timeline: timeline,
+        on_interaction_data_update: function(data) {
+            jsPsych.data.get().push(data)
+        },
+        on_data_update: function() {
+            database.ref(firebase.auth().currentUser.uid).set({
+                data: jsPsych.data.get().values()
+            });
+        },
+        on_finish: function() {
+            firebase.database().ref(firebase.auth().currentUser.uid).set({
+                data: jsPsych.data.get().values()
+            })
+            document.body.innerHTML = '<p><p><p align="center">Thank you for participating in the study!<p align="center"><b>You will be automatically re-directed to Prolific in a few moments.</b></p>';
+            setTimeout(function () { location.href = "https://app.prolific.co/submissions/complete?cc=865BE374" }, 5000);
+        }
 });
+
+
+
+
+
+
+
+
