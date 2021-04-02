@@ -168,7 +168,7 @@ var exp = (function() {
 
                 part3: [`<div class='parent'>
                 <p>You are now ready to complete the <span class='${text.span2}'>${text.game2}</span>.</p>
-                <p>Remember: Your goal is to keep your attention focused on the images in the center of the scrren. At the end
+                <p>Remember: Your goal is to keep your attention focused on the images in the center of the screen. At the end
                 of each trial, you must press your SPACEBAR to start the next trial.</p>
                 <p>Once you proceed, the <span class='${text.span2}'>${text.game2}</span> will start immediately, 
                 so get ready to focus your attention on the images in the center of your screen.</p>
