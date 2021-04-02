@@ -564,7 +564,7 @@ jsPsych.init({
         timeline: timeline,
         on_interaction_data_update: function(data) {
             console.log(data.trial);
-            jsPsych.data.get().push(data);
+            if (data.trial > 5) { jsPsych.data.get().push(data) } ;
         },
         on_data_update: function() {
             console.log(jsPsych.data.get().values())
