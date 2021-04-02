@@ -564,10 +564,10 @@ jsPsych.init({
         timeline: timeline,
         on_interaction_data_update: function(data) {
             console.log("on_interaction_data_update");
-//            jsPsych.data.get().push(data);
+            jsPsych.data.get().push(data);
         },
         on_data_update: function() {
-            console.log("on_data_update")
+            console.log(jsPsych.data.get().values())
             database.ref(firebase.auth().currentUser.uid).set({
                 data: jsPsych.data.get().values()
             });
