@@ -211,7 +211,6 @@ var exp = (function() {
             scale_width: 500,
             on_finish: function(data){
                 compAns1 = JSON.parse(data.responses)[`percentChk1_${round}`];
-                console.log(compAns1);
             }
         };
 
@@ -229,7 +228,6 @@ var exp = (function() {
             scale_width: 500,
             on_finish: function(data){
                 compAns2 = JSON.parse(data.responses)[`percentChk2_${round}`];
-                console.log(compAns2);
             },
         };
 
@@ -366,7 +364,6 @@ var exp = (function() {
             };
             data.stimulus == "<img src='img/jackpot.png' class='rewardimg'>" ? data.Jackpot = true : data.Jackpot = false;
             rt = data.rt;
-            console.log(tNum, hits, misses, hit, rt);
         };
     };
 
@@ -562,20 +559,18 @@ var timeline = [
 
 jsPsych.init({
         timeline: timeline,
-        on_interaction_data_update: function(data) {
-            console.log(data.trial);
-            if (data.trial > 5) { jsPsych.data.get().push(data) } ;
-        },
+        // on_interaction_data_update: function(data) {
+        //     jsPsych.data.get().push(data);
+        // },
         on_data_update: function() {
-            console.log(jsPsych.data.get().values())
             database.ref(firebase.auth().currentUser.uid).set({
-                data: jsPsych.data.get().values()
+                data: jsPsych.data.get().values();
             });
         },
         on_finish: function() {
             firebase.database().ref(firebase.auth().currentUser.uid).set({
-                data: jsPsych.data.get().values()
-            })
+                data: jsPsych.data.get().values();
+            });
             document.body.innerHTML = '<p><p><p align="center">Thank you for participating in the study!<p align="center"><b>You will be automatically re-directed to Prolific in a few moments.</b></p>';
             setTimeout(function () { location.href = "https://app.prolific.co/submissions/complete?cc=865BE374" }, 5000);
         }
