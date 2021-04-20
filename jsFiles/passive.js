@@ -51,8 +51,6 @@ var passiveGame = (function() {
         pEM: settings.pEM,
         colorOrder: settings.colorOrder,
         miOrder: settings.miOrder,
-        startDate: jsPsych.data.getURLVariable('date'),
-        startTime: jsPsych.data.getURLVariable('time'),
     });
 
    /*
