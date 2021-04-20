@@ -2,7 +2,9 @@
 var condition = jsPsych.randomization.sampleWithReplacement([1, 0], 1)
 
 jsPsych.data.addProperties({
-    activeCondition: condition
+    activeCondition: condition,
+    date: new Date(),
+    PROLIFIC_PID: jsPsych.data.getURLVariable('subject'),
 });
 
 function MakeTimeline(game) {
