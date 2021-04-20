@@ -69,7 +69,7 @@ var activeGame = (function() {
         pages = {
             r1: {
                 part1: [`<div class='parent' style='text-align: left'>
-                <p>We are designing games that can be used by behavioral scientists to study motivation and decision making. 
+                <p>We are designing games that can be used by behavioral scientists to study visual attention. 
                 To make the games as engaging as possible, we are getting feedback from people like you.</p>
                 <p>You will play two different games: the <span class='${text.span1}'>${text.game1}</span> and the 
                 <span class='${text.span2}'>${text.game2}</span>. Then you will tell us which you found more engaging.</p>
