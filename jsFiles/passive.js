@@ -6,8 +6,7 @@ var passiveGame = (function() {
 
     // randomly assign to conditions
     var settings = {
-        colorOrder: jsPsych.randomization.sampleWithReplacement([1, 0], 1),
-        miOrder: jsPsych.randomization.sampleWithoutReplacement([0, 1, 2, 3], 1),
+        colorOrder: Math.floor(Math.random()*2),
         pM: jsPsych.randomization.sampleWithoutReplacement([2, 3, 4, 5, 6, 7, 8], 2),
         pEM: jsPsych.randomization.sampleWithoutReplacement([6, 7, 8, 9, 10], 2),
     };
@@ -50,7 +49,6 @@ var passiveGame = (function() {
         pM: settings.pM,
         pEM: settings.pEM,
         colorOrder: settings.colorOrder,
-        miOrder: settings.miOrder,
     });
 
    /*

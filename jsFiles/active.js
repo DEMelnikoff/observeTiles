@@ -6,8 +6,7 @@ var activeGame = (function() {
 
     // randomly assign to conditions
     var settings = {
-        colorOrder: jsPsych.randomization.sampleWithReplacement([1, 0], 1),
-        miOrder: jsPsych.randomization.sampleWithoutReplacement([0, 1, 2, 3], 1),
+        colorOrder: Math.floor(Math.random()*2),
         pM: jsPsych.randomization.sampleWithoutReplacement([2, 3, 4, 5, 6, 7, 8], 2),
         pEM: jsPsych.randomization.sampleWithoutReplacement([6, 7, 8, 9, 10], 2),
     };
@@ -50,7 +49,6 @@ var activeGame = (function() {
         pM: settings.pM,
         pEM: settings.pEM,
         colorOrder: settings.colorOrder,
-        miOrder: settings.miOrder,
     });
 
    /*
@@ -341,7 +339,7 @@ var activeGame = (function() {
 
     function MakeFeedback(round) {
         this.type = 'html-keyboard-response';
-        this.data = {Trial_Type: `feedback${round}`};
+        this.data = {Trial_Type: `feedback_${round}`};
         this.stimulus = function(){
             return (jsPsych.data.get().last(2).values()[0].key_press == 32) ? hitFeedback[round][hits-1] : missFeedback[round][misses-1];
         };

@@ -1,5 +1,5 @@
 
-var condition = jsPsych.randomization.sampleWithReplacement([1, 0], 1)
+var condition = Math.floor(Math.random()*2);
 
 jsPsych.data.addProperties({
     activeCondition: condition,
