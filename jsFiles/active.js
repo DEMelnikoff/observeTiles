@@ -447,7 +447,7 @@ var activeGame = (function() {
         <p>Thank you for completing the <span class='${span}'>${name}</span>!</strong></p>
 
         <p>During the <span class='${span}'>${name}</span>, to what extent did you feel immersed 
-        an engaged in what you were doing? Report how immersed and engaged you felt by 
+        and engaged in what you were doing? Report how immersed and engaged you felt by 
         answering the following questions.</p></div>`;
         this.questions = [
             {prompt: `During the <span class='${span}'>${name}</span>, to what extent did you feel absorbed in what you were doing?`,
@@ -539,7 +539,7 @@ var activeGame = (function() {
             button_label: ['CLICK HERE TO FINISH'], 
             preamble: function() {
                 return `<p>Thank you for participating!</p><p>In total, you won <b>${totalJackpots} cents</b> in bonus money!
-                <br>Within one week, you will receive your bonus money, plus $1.50 for your participation.</p>
+                <br>Within one week, you will receive your bonus money. Your $1.50 for participating will be delivered immediately.</p>
                 <p>To receive payment, enter your Prolific ID in the space below.</p>`
             },
         };
@@ -554,26 +554,3 @@ var activeGame = (function() {
     return p;
 
 }());
-
-// var timeline = [
-//     exp.intro.r1part1,
-//     exp.intro.r1part2,
-//     exp.intro.r1part3,
-//     exp.task.round1,
-//     exp.Qs.round1,
-//     exp.intro.r2part1,
-//     exp.intro.r2part2,
-//     exp.intro.r2part3,
-//     exp.task.round2,
-//     exp.Qs.round2,
-//     exp.Qs.demographics
-// ];
-
-// jsPsych.init({
-//     timeline: timeline, 
-//     // on_finish: function() {
-//     //     firebase.database().ref(firebase.auth().currentUser.uid).set({
-//     //         data: jsPsych.data.get().values()
-//     //     })
-//     // }
-// });
