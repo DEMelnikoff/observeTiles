@@ -75,13 +75,13 @@ var activeGame = (function() {
                 </div>`],
 
                 part2: [`<div class='parent'>
-                <p>The goal of the <span class='${text.span1}'>${text.game1}</span> is to win as many "10-cent Jackpots" as possible.</p>
-                <p>For every 10-cent Jackpot you win, you will receive an extra 10 cents; at the end of the study, 
-                you will receive $7 for your participation, plus an additional 10 cents for each 10-cent Jackpot you win.</p>
+                <p>The goal of the <span class='${text.span1}'>${text.game1}</span> is to win as many "1-cent Jackpots" as possible.</p>
+                <p>For every 1-cent Jackpot you win, you will receive an extra 1 cent; at the end of the study, 
+                you will receive $1.50 for your participation, plus an additional 1 cent for each 1-cent Jackpot you win.</p>
                 </div>`,
 
                 `<div class='parent'>
-                <p>To win 10-cent Jackpots, you will try to "activate" tiles like this one:</p>
+                <p>To win 1-cent Jackpots, you will try to "activate" tiles like this one:</p>
                 <div class="box" style="background-color:gray"></div>
                 </div>`,
 
@@ -98,23 +98,23 @@ var activeGame = (function() {
                 </div>`,
 
                 `<div class='parent'>
-                <p>If you turn a tile <span class='${text.span1}'>${text.color1}</span>, your odds of winning a 10-cent 
+                <p>If you turn a tile <span class='${text.span1}'>${text.color1}</span>, your odds of winning a 1-cent 
                 Jackpot that trial are <span class='${text.span1}'>${text.bestOdds1}</span>.</p>
                 <div class='box' style='background-color:${text.hex1}'></div>
                 </div>`,
 
                 `<div class='parent'>
                 <p>If a tile disappears before you turn it <span class='${text.span1}'>${text.color1}</span>,
-                your odds of winning a 10-cent Jackpot that trial are <span class='${text.span1}'>${text.worstOdds1}</span>.</p>
+                your odds of winning a 1-cent Jackpot that trial are <span class='${text.span1}'>${text.worstOdds1}</span>.</p>
                 </div>`,
 
                 `<div class='parent'>
-                <p>If you win a 10-cent Jackpot, you'll see this image...</p>
+                <p>If you win a 1-cent Jackpot, you'll see this image...</p>
                 <img src='img/jackpot.png', style='height: 75%'>
                 </div>`,
 
                 `<div class='parent'>
-                <p>...and if you don't win a 10-cent Jackpot, you'll see this image.</p>
+                <p>...and if you don't win a 1-cent Jackpot, you'll see this image.</p>
                 <img src='img/nope.png', style='height: 75%'>
                 </div>`],
 
@@ -144,14 +144,14 @@ var activeGame = (function() {
 
                 `<div class='parent'>
                 <p>Second, in the <span class='${text.span2}'>${text.game2}</span>, if you turn a tile 
-                <span class='${text.span2}'>${text.color2}</span>, your odds of winning a 10-cent Jackpot that trial 
+                <span class='${text.span2}'>${text.color2}</span>, your odds of winning a 1-cent Jackpot that trial 
                 are <span class='${text.span2}'>${text.bestOdds2}</span> (instead of <span class='${text.span1}'>${text.bestOdds1}</span>)...</p>
                 <div class='box' style='background-color:${text.hex2}'></div>
                 </div>`,
 
                 `<div class='parent'>
                 <p>...and if a tile disappears before you turn it <span class='${text.span2}'>${text.color2}</span>,
-                <br>your odds of winning a 10-cent Jackpot that trial are <span class='${text.span2}'>${text.worstOdds2}</span>
+                <br>your odds of winning a 1-cent Jackpot that trial are <span class='${text.span2}'>${text.worstOdds2}</span>
                 (instead of <span class='${text.span1}'>${text.worstOdds1}</span>).</p>
                 </div>`,
 
@@ -197,7 +197,7 @@ var activeGame = (function() {
                 please answer the following question.</p></div>`,
             questions: [
                 {prompt: `If you turn a tile <span class='${span}'>${color}</span>, 
-                what are your chances of winning a 10-cent Jackpot on that trial?`,
+                what are your chances of winning a 1-cent Jackpot on that trial?`,
                 name: `percentChk1_${round}`, 
                 labels: percentScale}
             ],
@@ -214,7 +214,7 @@ var activeGame = (function() {
             please answer the following question.</p></div>`,
             questions: [
                 {prompt: `If a tile disappears before you turn it 
-                <span class='${span}'>${color}</span>, what are your chances of winning a 10-cent Jackpot on that trial?`,
+                <span class='${span}'>${color}</span>, what are your chances of winning a 1-cent Jackpot on that trial?`,
                 name: `percentChk2_${round}`, 
                 labels: percentScale}
             ],
@@ -400,7 +400,10 @@ var activeGame = (function() {
         ITI = [250, 500, 750, 1000, 1250, 1500, 1750, 2000, 2250, 2500, 2750, 3000],
         hits = 0,
         misses = 0,
-        tNum = 0
+        tNum = 0,
+        totalJackpotsR1,
+        totalJackpotsR2,
+        totalJackpots
 
     // trial variables
     var probeR1 = new MakeProbe('R1'),
@@ -523,11 +526,22 @@ var activeGame = (function() {
         var finalWord = {
             type: 'survey-text',
             questions: [{prompt: "Questions? Comments? Complains? Provide your feedback here!", rows: 10, columns: 100, name: "finalWord"}],
+            on_finish: function(data){
+                totalJackpotsR1 = jsPsych.data.get().filter({Trial_Type: 'feedback_R1', Jackpot: true}).count();
+                totalJackpotsR2 = jsPsych.data.get().filter({Trial_Type: 'feedback_R2', Jackpot: true}).count();
+                totalJackpots = totalJackpotsR1 + totalJackpotsR2;
+                console.log(totalJackpots);
+            },
         }; 
         var email = {
             type: 'survey-text',
             questions: [{prompt: "", placeholder: "Prolific ID", name: "PID", columns: 50, required: true}],
             button_label: ['CLICK HERE TO FINISH'], 
+            preamble: function() {
+                return `<p>Thank you for participating!</p><p>In total, you won <b>${totalJackpots} cents</b> in bonus money!
+                <br>Within one week, you will receive your bonus money, plus $1.50 for your participation.</p>
+                <p>To receive payment, enter your Prolific ID in the space below.</p>`
+            },
         };
         var demos = {
             timeline: [gender, age, ethnicity, english, finalWord, email]

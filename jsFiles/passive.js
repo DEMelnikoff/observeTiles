@@ -77,9 +77,9 @@ var passiveGame = (function() {
                 part2: [`<div class='parent'>
                 <p>During the <span class='${text.span1}'>${text.game1}</span>, images will appear in the center of your screen.
                 <br>Your goal is to keep your attention focused on these images.</p>
-                <p>Periodically, you will receive rewards in the form of 10-cent "Jackpots."</p>
-                <p>For every 10-cent Jackpot you receive, you will earn an extra 10 cents; at the end of the study, 
-                you will receive $7 for your participation, plus an additional 10 cents for each 10-cent Jackpot.</p>
+                <p>Periodically, you will receive rewards in the form of 1-cent "Jackpots."</p>
+                <p>For every 1-cent Jackpot you receive, you will earn an extra 10 cents; at the end of the study, 
+                you will receive $1.50 for your participation, plus an additional 10 cents for each 1-cent Jackpot.</p>
                 </div>`,
 
                 `<div class='parent'>
@@ -98,23 +98,23 @@ var passiveGame = (function() {
                 </div>`,
 
                 `<div class='parent'>
-                <p>If a tile turns <span class='${text.span1}'>${text.color1}</span>, your odds of winning a 10-cent 
+                <p>If a tile turns <span class='${text.span1}'>${text.color1}</span>, your odds of winning a 1-cent 
                 Jackpot that trial are <span class='${text.span1}'>${text.bestOdds1}</span>.</p>
                 <div class='box' style='background-color:${text.hex1}'></div>
                 </div>`,
 
                 `<div class='parent'>
                 <p>If a tile disappears instead of turning <span class='${text.span1}'>${text.color1}</span>,
-                your odds of winning a 10-cent Jackpot that trial are <span class='${text.span1}'>${text.worstOdds1}</span>.</p>
+                your odds of winning a 1-cent Jackpot that trial are <span class='${text.span1}'>${text.worstOdds1}</span>.</p>
                 </div>`,
 
                 `<div class='parent'>
-                <p>If you win a 10-cent Jackpot, you'll see this image...</p>
+                <p>If you win a 1-cent Jackpot, you'll see this image...</p>
                 <img src='img/jackpot.png', style='height: 75%'>
                 </div>`,
 
                 `<div class='parent'>
-                <p>...and if you don't win a 10-cent Jackpot, you'll see this image.</p>
+                <p>...and if you don't win a 1-cent Jackpot, you'll see this image.</p>
                 <img src='img/nope.png', style='height: 75%'>
                 </div>`,
 
@@ -151,14 +151,14 @@ var passiveGame = (function() {
 
                 `<div class='parent'>
                 <p>Second, in the <span class='${text.span2}'>${text.game2}</span>, if a tile turns
-                <span class='${text.span2}'>${text.color2}</span>,<br>your odds of winning a 10-cent Jackpot that trial 
+                <span class='${text.span2}'>${text.color2}</span>,<br>your odds of winning a 1-cent Jackpot that trial 
                 are <span class='${text.span2}'>${text.bestOdds2}</span> (instead of <span class='${text.span1}'>${text.bestOdds1}</span>)...</p>
                 <div class='box' style='background-color:${text.hex2}'></div>
                 </div>`,
 
                 `<div class='parent'>
                 <p>...and if a tile disappears instead of turning <span class='${text.span2}'>${text.color2}</span>,
-                <br>your odds of winning a 10-cent Jackpot that trial are <span class='${text.span2}'>${text.worstOdds2}</span>
+                <br>your odds of winning a 1-cent Jackpot that trial are <span class='${text.span2}'>${text.worstOdds2}</span>
                 (instead of <span class='${text.span1}'>${text.worstOdds1}</span>).</p>
                 </div>`],
 
@@ -200,7 +200,7 @@ var passiveGame = (function() {
             please answer the following question.</p></div>`,
             questions: [
                 {prompt: `If a gray tile turns <span class='${span}'>${color}</span>, 
-                what are your chances of winning a 10-cent Jackpot on that trial?`,
+                what are your chances of winning a 1-cent Jackpot on that trial?`,
                 name: `percentChk1_${round}`,
                 labels: percentScale}
             ],
@@ -217,7 +217,7 @@ var passiveGame = (function() {
             please answer the following question.</p></div>`,
             questions: [
                 {prompt: `If a gray tile disappears instead of turning <span class='${span}'>${color}</span>, 
-                what are your chances of winning a 10-cent Jackpot on that trial?`,
+                what are your chances of winning a 1-cent Jackpot on that trial?`,
                 name: `percentChk2_${round}`,
                 labels: percentScale}
             ],
@@ -403,7 +403,10 @@ var passiveGame = (function() {
         rt = 1500,
         hits = 0,
         misses = 0,
-        tNum = 0
+        tNum = 0,
+        totalJackpotsR1,
+        totalJackpotsR2,
+        totalJackpots
 
     // trial variables
     var probeR1 = new MakeProbe('R1'),
@@ -526,11 +529,22 @@ var passiveGame = (function() {
         var finalWord = {
             type: 'survey-text',
             questions: [{prompt: "Questions? Comments? Complains? Provide your feedback here!", rows: 10, columns: 100, name: "finalWord"}],
+            on_finish: function(data){
+                totalJackpotsR1 = jsPsych.data.get().filter({Trial_Type: 'feedback_R1', Jackpot: true}).count();
+                totalJackpotsR2 = jsPsych.data.get().filter({Trial_Type: 'feedback_R2', Jackpot: true}).count();
+                totalJackpots = totalJackpotsR1 + totalJackpotsR2;
+                console.log(totalJackpots);
+            },
         }; 
         var email = {
             type: 'survey-text',
             questions: [{prompt: "", placeholder: "Prolific ID", name: "PID", columns: 50, required: true}],
-            button_label: ['CLICK HERE TO FINISH'], 
+            button_label: ['CLICK HERE TO FINISH'],
+            preamble: function() {
+                return `<p>Thank you for participating!</p><p>In total, you won <b>${totalJackpots} cents</b> in bonus money!
+                <br>Within one week, you will receive your bonus money, plus $1.50 for your participation.</p>
+                <p>To receive payment, enter your Prolific ID in the space below.</p>`
+            },
         };
         var demos = {
             timeline: [gender, age, ethnicity, english, finalWord, email]
