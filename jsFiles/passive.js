@@ -78,8 +78,8 @@ var passiveGame = (function() {
                 <p>During the <span class='${text.span1}'>${text.game1}</span>, images will appear in the center of your screen.
                 <br>Your goal is to keep your attention focused on these images.</p>
                 <p>Periodically, you will receive rewards in the form of 1-cent "Jackpots."</p>
-                <p>For every 1-cent Jackpot you receive, you will earn an extra 10 cents; at the end of the study, 
-                you will receive $1.50 for your participation, plus an additional 10 cents for each 1-cent Jackpot.</p>
+                <p>For every 1-cent Jackpot you receive, you will earn an extra 1 cent; at the end of the study, 
+                you will receive $1.50 for your participation, plus an additional 1 cent for each 1-cent Jackpot.</p>
                 </div>`,
 
                 `<div class='parent'>
