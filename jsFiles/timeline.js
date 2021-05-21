@@ -30,20 +30,32 @@ if (condition == 1) {
 };
 
 jsPsych.init({
-    timeline: exp.timeline,
-    // on_interaction_data_update: function(data) {
-    //     jsPsych.data.get().push(data);
-    // },
-    on_data_update: function() {
-        database.ref(firebase.auth().currentUser.uid).set({
-            data: jsPsych.data.get().values()
-        });
-    },
-    on_finish: function() {
-        firebase.database().ref(firebase.auth().currentUser.uid).set({
-            data: jsPsych.data.get().values()
+   timeline: exp.timeline,
+   on_finish: function() {
+       firebase.database().ref(firebase.auth().currentUser.uid).set({
+           data: jsPsych.data.get().values()
         });
         document.body.innerHTML = '<p><p><p align="center">Thank you for participating in the study!<p align="center"><b>You will be automatically re-directed to Prolific in a few moments.</b></p>';
         setTimeout(function () { location.href = "https://app.prolific.co/submissions/complete?cc=865BE374" }, 5000);
-    }
+       });
+   },
 });
+
+// jsPsych.init({
+//     timeline: exp.timeline,
+//     // on_interaction_data_update: function(data) {
+//     //     jsPsych.data.get().push(data);
+//     // },
+//     on_data_update: function() {
+//         database.ref(firebase.auth().currentUser.uid).set({
+//             data: jsPsych.data.get().values()
+//         });
+//     },
+//     on_finish: function() {
+//         firebase.database().ref(firebase.auth().currentUser.uid).set({
+//             data: jsPsych.data.get().values()
+//         });
+//         document.body.innerHTML = '<p><p><p align="center">Thank you for participating in the study!<p align="center"><b>You will be automatically re-directed to Prolific in a few moments.</b></p>';
+//         setTimeout(function () { location.href = "https://app.prolific.co/submissions/complete?cc=865BE374" }, 5000);
+//     }
+// });
